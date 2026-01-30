@@ -16,20 +16,42 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-           <div class="mt-4">
-            <x-input-label for="role" :value="__('Role')" />
+    <div x-data="{ role: '{{ old('role') }}' }">
+        <x-input-label for="role" value="Role" />
 
-            <x-select
-                name="role"
-                required
-                :options="[
-                    'job_seeker' => 'Job Seeker',
-                    'recruiter' => 'Recruiter'
-                ]"
+        <x-select
+            name="role"
+            x-model="role"
+            required
+            class="block mt-1 w-full rounded-md shadow-sm
+                border-gray-300 dark:border-gray-700
+                bg-white dark:bg-gray-900
+                text-gray-900 dark:text-gray-300
+                focus:border-indigo-500 focus:ring-indigo-500"
+            :options="[
+                'job_seeker' => 'Job Seeker',
+                'recruiter' => 'Recruiter'
+            ]"
+        />
+
+        <x-input-error :messages="$errors->get('role')" class="mt-2" />
+
+        <!-- Specialty -->
+        <div class="mt-4" x-show="role === 'recruiter'" x-transition>
+            <x-input-label for="specialty" value="Specialty" />
+
+            <x-text-input
+                id="specialty"
+                name="specialty"
+                type="text"
+                class="block mt-1 w-full"
+                placeholder="e.g. Tech Recruiting"
             />
 
-            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+            <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
         </div>
+    </div>
+
 
 
         <!-- Password -->
