@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
 
-    public function index(Request $request){
-        $users = User::where('name', 'like', "%{$request->q}%")
-        ->orWhere('specialty', 'like', "%{$request->q}%")
-        ->get();
-        
+    public function index(Request $request)
+    {
+        $query = $request->input('profile');
+
+        $users = User::where('name', 'like', "%{$query}%")
+            ->orWhere('specialty', 'like', "%{$query}%")
+            ->get();
 
         return view('dashboard', compact('users'));
     }
+
 }
