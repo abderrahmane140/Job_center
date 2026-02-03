@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Cv;
-use App\Models\JobOffre;
+use App\Models\JobOffer;
 use App\Models\Friendship;
 use App\Models\Application;
 
@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     //one to many
     public function jobOffre(){
-        return $this->hasMany(JobOffre::class);
+        return $this->hasMany(JobOffer::class);
     }
 
     public function sentFriendRequests()
