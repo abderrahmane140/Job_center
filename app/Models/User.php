@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Cv;
+use App\Models\JobOffre;
+use App\Models\Friendship;
+use App\Models\Application;
 
 class User extends Authenticatable
 {
@@ -22,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'specialty',
         'role',
         'bio',
         'photo'
@@ -49,4 +54,31 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //One to one
+    public function cv(){
+        return $this->hasOne(Cv::class);
+    }
+
+    //one to many
+    public function jobOffre(){
+        return $this->hasMany(JobOffre::class);
+    }
+
+    public function sentFriendRequests()
+    {
+        return $this->hasMany(Friendship::class, 'sender_id');
+    }
+
+    public function receivedFriendRequests()
+    {
+        return $this->hasMany(Friendship::class, 'receiver_id');
+    }
+
+
+    public function application()
+    {
+        return $this->hasMany(Application::class);
+    }
+
 }
