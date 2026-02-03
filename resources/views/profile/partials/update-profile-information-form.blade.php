@@ -46,6 +46,17 @@
                 </div>
             @endif
         </div>
+        <textarea
+            id="bio"
+            name="bio"
+            rows="4"
+            class="mt-1 block w-full rounded-md border-gray-300
+                dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300
+                focus:border-indigo-500 focus:ring-indigo-500"
+        >{{ old('bio', $user->bio ?? '') }}</textarea>
+
+
+
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

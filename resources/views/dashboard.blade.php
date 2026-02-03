@@ -46,25 +46,25 @@
                 @if($users->isEmpty())
                     <p class="text-gray-600 dark:text-gray-400">No profiles found.</p>
                 @else
-                    <div class="flex flex-wrap -mx-2">
-                        @foreach($users as $user)
-                            <div class="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
-                                <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition">
-                                    <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">{{ $user->name }}</h4>
-                                    <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Email:</span> {{ $user->email }}</p>
-                                    <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Role:</span> {{ ucfirst($user->role) }}</p>
-                                    @if(isset($user->specialty))
-                                        <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Specialty:</span> {{ $user->specialty }}</p>
-                                    @endif
-                                </div>
+                            <div class="flex flex-wrap -mx-2">
+                                @foreach($users as $user)
+                                    <div class="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
+                                        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg shadow hover:shadow-md transition">
+                                            <h4 class="font-semibold text-gray-900 dark:text-gray-100 mb-2">{{ $user->name }}</h4>
+                                            <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Email:</span> {{ $user->email }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Role:</span> {{ ucfirst($user->role) }}</p>
+                                            <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Role:</span> {{ ucfirst($user->bio) }}</p>
+
+                                            @if(isset($user->specialty))
+                                                <p class="text-gray-600 dark:text-gray-400"><span class="font-medium">Specialty:</span> {{ $user->specialty }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                 @endif
-            </div>
-        @endif
-
-
                 </div>
 
             </div>

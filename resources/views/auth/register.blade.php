@@ -38,19 +38,37 @@
 
         <!-- Specialty -->
         <div class="mt-4" x-show="role === 'recruiter'" x-transition>
-            <x-input-label for="specialty" value="Specialty" />
+                <x-input-label for="specialty" value="Specialty" />
 
-            <x-text-input
-                id="specialty"
-                name="specialty"
-                type="text"
-                class="block mt-1 w-full"
-                placeholder="e.g. Tech Recruiting"
-            />
+                <x-text-input
+                    id="specialty"
+                    name="specialty"
+                    type="text"
+                    class="block mt-1 w-full"
+                    placeholder="e.g. Tech Recruiting"
+                />
 
-            <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
+                <x-input-error :messages="$errors->get('specialty')" class="mt-2" />
+            </div>
         </div>
-    </div>
+
+        <div class="mt-4">
+            <x-input-label for="bio" :value="__('Bio')" />
+
+            <textarea
+                id="bio"
+                name="bio"
+                rows="4"
+                class="block mt-1 w-full rounded-md border-gray-300
+                    dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300
+                    focus:border-indigo-500 focus:ring-indigo-500"
+                placeholder="Tell us a little about yourself..."
+            >{{ old('bio') }}</textarea>
+
+            <x-input-error :messages="$errors->get('bio')" class="mt-2" />
+        </div>
+
+
 
 
 
