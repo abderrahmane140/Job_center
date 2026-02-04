@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JobOfferController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,5 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['role:recruiter'])->group(function () {
+    Route::resource('job-offers', JobOfferController::class);
+});
+
+Route::middleware(['role:job_seeker'])->group(function () {
+    Route::post('/job-offers/{jobOffer}/apply', [ApplicationController::class, 'store']);
+});
+
+
 
 require __DIR__.'/auth.php';
