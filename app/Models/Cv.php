@@ -11,29 +11,22 @@ class Cv extends Model
         'title'
     ];
 
-
-
-    // one to one 
+    // One-to-one 
     public function user(){
         return $this->belongsTo(User::class);
     }
 
-
-    //one to many 
-
+    // One-to-many 
     public function educations(){
         return $this->hasMany(Education::class);
     }
 
-
-    //one to many 
-
+    // One-to-many 
     public function experiences(){
         return $this->hasMany(Experience::class);
     }
 
-    //many to many
-
+    // Many-to-many
     public function skills(){
         return $this->belongsToMany(Skill::class,'cv_skill');
     }
