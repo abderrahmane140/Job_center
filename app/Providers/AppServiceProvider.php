@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\JobOffer;
+use App\Policies\JobOfferPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,4 +23,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    protected $policies = [
+        JobOffer::class => JobOfferPolicy::class,
+    ];
+
 }

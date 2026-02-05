@@ -15,6 +15,16 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- New CV link -->
+                    <x-nav-link :href="route('cv.index')" :active="request()->routeIs('cv')">
+                        {{ __('My CV') }}
+                    </x-nav-link>
+
+                    <!-- New Offers link -->
+                    <x-nav-link :href="route('offers')" :active="request()->routeIs('offers')">
+                        {{ __('Job Offers') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -66,11 +76,22 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="pt-2 pb-3 space-y-1 text-white">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- New CV link -->
+            <x-responsive-nav-link :href="route('cv.index')" :active="request()->routeIs('cv.index')">
+                {{ __('My CV') }}
+            </x-responsive-nav-link>
+
+            <!-- New Offers link -->
+            <x-responsive-nav-link :href="route('offers')" :active="request()->routeIs('offers')">
+                {{ __('Job Offers') }}
+            </x-responsive-nav-link>
         </div>
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
