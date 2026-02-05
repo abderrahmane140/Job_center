@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class JobOffer extends Model{
+
+    use HasFactory;
 
     protected $fillable = [
        'user_id',
@@ -19,7 +22,7 @@ class JobOffer extends Model{
     // One-to-Many: Job -> Applications
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class, 'job_id'); 
     }
 
     // Job belongs to a recruiter
