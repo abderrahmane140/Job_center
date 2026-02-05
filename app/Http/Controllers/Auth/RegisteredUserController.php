@@ -45,7 +45,6 @@ class RegisteredUserController extends Controller
             'photo' => $request->photo
         ]);
 
-        $user->assignRole($request->role);
 
         event(new Registered($user));
 
