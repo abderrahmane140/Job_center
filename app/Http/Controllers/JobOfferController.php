@@ -1,90 +1,74 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class JobOfferController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use AuthorizesRequests;
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        if ($user->role === 'recruiter') {
+            // Recruiter sees only their own offers
+            $jobOffers = JobOffer::where('user_id', $user->id)->get();
+        } else {
+            // Job seeker sees all active offers
+            $jobOffers = JobOffer::where('is_active', 1)->get();
+        }
+
+        return view('job_offers.index', compact('jobOffers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $this->authorize('create', JobOffer::class);
+        return view('job_offers.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
 
-        // ✅ Validation
+        $this->authorize('create', JobOffer::class);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'contract_type' => 'required|string',
             'company' => 'required|string|max:255',
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
+            'contract_type' => 'required|in:CDI,CDD,Full-time,Stage,Freelance',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        // ✅ Upload Image
-        $imagePath = $request->file('image')->store('job_offers', 'public');
+        $data = $request->only(['title','description','company','contract_type']);
 
-        // ✅ Create Job Offer
-        JobOffer::create([
-            'user_id' => auth()->id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'image' => $imagePath,
-            'contract_type' => $request->contract_type,
-            'company' => $request->company,
-        ]);
+        if($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('job_images', 'public');
+        }
 
-        return redirect()->route('job-offers.index')
-                        ->with('success', 'Job offer created successfully!');
+        $data['user_id'] = Auth::id();
+
+        JobOffer::create($data);
+
+        return redirect()->route('job_offers.index')
+                         ->with('success', 'Job Offer Created!');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy(JobOffer $jobOffer)
     {
-        //
+
+        if ($jobOffer->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to delete this job offer.');
+        }
+
+        $jobOffer->delete();
+
+        return redirect()->route('job_offers.index')->with('success', 'Job offer deleted!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
