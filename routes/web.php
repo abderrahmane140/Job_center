@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CvController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -55,5 +56,18 @@ Route::middleware(['auth', 'role:job_seeker'])->group(function () {
     Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
     Route::delete('/skills/{skill}', [SkillController::class, 'destroy'])->name('skills.destroy');
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/friend' , [FriendshipController::class , 'index'])->name('friends.index');
+
+    Route::post('/friend-request/{user}', [FriendshipController::class, 'send'])
+        ->name('friend.send');
+
+    Route::post('/friend-request/accept/{id}', [FriendshipController::class, 'accept'])
+        ->name('friend.accept');
+
+    Route::post('/friend-request/reject/{id}', [FriendshipController::class, 'reject'])
+        ->name('friend.reject');
+    });
 
 require __DIR__.'/auth.php';

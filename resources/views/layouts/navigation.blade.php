@@ -31,6 +31,12 @@
                             {{ __('My CV') }}
                         </x-nav-link>
                     @endif
+
+                    <x-nav-link :href="route('friends.index')" :active="request()->routeIs('friends.index')">
+                            {{ __('Friends') }}
+                    </x-nav-link>
+
+                    
                 </div>
             </div>
 
